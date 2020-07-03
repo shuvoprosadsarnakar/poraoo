@@ -1,32 +1,25 @@
 import 'package:flutter/material.dart';
 import '../preference/preference_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  HomePage({
+    Key key,
+  }) : super(key: key);
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              // Navigate to the PreferencePage
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PreferencePage(),
-              ));
-            },
-          )
-        ],
-      ),
-      body: Center(
-        child: Container(
-          child: Text(
-            'Home',
-            style: Theme.of(context).textTheme.display1,
-          ),
-        ),
-      ),
+    return IconButton(
+    icon: Icon(Icons.settings),
+    onPressed: () {
+      // Navigate to the PreferencePage
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => PreferencePage(),
+      ));
+    },
     );
   }
 }
