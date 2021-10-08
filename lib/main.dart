@@ -1,89 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poraoo/ui/search/search_page.dart';
-
-import 'ui/global/theme/bloc/theme_bloc.dart';
-import 'ui/global/theme/bloc/theme_state.dart';
-import 'ui/home/home_page.dart';
-import 'package:poraoo/model/pagebucket.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget  {
+  
+const MyApp({Key key}) : super(key: key);
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter layout demo',
+        home:  NewWidget()
+          
+        
+      );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  final Key homeKey = PageStorageKey('home');
-  final Key searchKey = PageStorageKey('search');
-
-  int currentTab = 0;
-
-  HomePage homePage;
-  SearchPage searchPage;
-
-  List<Widget> pages;
-  Widget currentPage;
-
-  final PageStorageBucket bucket = PageStorageBucket();
-
-  @override
-  void initState() {
-    homePage = HomePage(key: homeKey);
-
-    searchPage = SearchPage(
-      key: searchKey,
-    );
-
-    pages = [homePage, searchPage];
-
-    currentPage = homePage;
-
-    super.initState();
-  }
+class NewWidget extends StatelessWidget {
+  const NewWidget({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      builder: (context) => ThemeBloc(),
-      child: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: _buildWithTheme,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('DraggableScrollableSheet'),
       ),
-    );
-  }
-
-  Widget _buildWithTheme(BuildContext context, ThemeState state) {
-    return MaterialApp(
-      theme: state.themeData,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Porao"),
-        ),
-        body: PageStorage(
-          child: currentPage,
-          bucket: bucket,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: currentTab,
-          iconSize: 20.00,
-          type: BottomNavigationBarType.fixed,
-          onTap: (int index) {
-            setState(() {
-              currentTab = index;
-              currentPage = pages[index];
-            });
+      body: SizedBox.expand(
+        child: DraggableScrollableSheet(
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Container(
+              color: Colors.blue[100],
+              child: ListView.builder(
+                controller: scrollController,
+                itemCount: 25,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(title: Text('Item $index'));
+                },
+              ),
+            );
           },
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              title: Text("Search"),
-            )
-          ],
         ),
       ),
     );

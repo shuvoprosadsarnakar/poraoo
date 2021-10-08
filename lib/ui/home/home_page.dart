@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../preference/preference_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -15,10 +14,7 @@ class _HomePageState extends State<HomePage> {
     return IconButton(
     icon: Icon(Icons.settings),
     onPressed: () {
-      // Navigate to the PreferencePage
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => PreferencePage(),
-      ));
+
     },
     );
   }
